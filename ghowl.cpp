@@ -217,14 +217,20 @@ int main( int argc, char* args[] )
 					if( e.type == SDL_QUIT )
 					{
 						quit = true;
-					} /*
-                         //TODO setup sprite moves around in response to user input
+					} 
+                    //TODO setup sprite moves around in response to user input
 					//User presses a key
 					else if( e.type == SDL_KEYDOWN )
 					{
-						//Select surfaces based on key press
+					    //do stuff depending on key 	
 						switch( e.key.keysym.sym )
 						{
+                            //quit on escape key
+                            case SDLK_ESCAPE:
+                            quit = true;
+                            break;
+
+                            /*
 							case SDLK_UP:
 							gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_UP ];
 							break;
@@ -234,7 +240,7 @@ int main( int argc, char* args[] )
 							break;
 
 							case SDLK_LEFT:
-							gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_LEFT ];
+				     		gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_LEFT ];
 							break;
 
 							case SDLK_RIGHT:
@@ -244,8 +250,9 @@ int main( int argc, char* args[] )
 							default:
 							gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_DEFAULT ];
 							break;
-						}
-					} */
+                            */
+                        }
+                    }
 				}
 
                 //Draw the background
