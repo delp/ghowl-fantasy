@@ -13,6 +13,21 @@ Deliverables
         --rip off a fun song
     D002 A move around and jump on things tech demo which features scrolling background and tiled world map
         --Make sure the physics are good and fun
+        
+        F001 - add PNG support
+        F002 - draw a tiled room ******
+               with the dungeon  *    * 
+               tiles             *    * 
+                                 *    * 
+                                 ******
+        F003 - Draw ghowl in the room
+        F004 - Ghowl moves around when keys pressed
+        F005 - Room randomly generated
+        F006 - Tile collision physics        
+        F007 - Ghowl jump
+        F008 - Tile randomly generated
+
+
 
 Design - 
 jump around
