@@ -15,11 +15,17 @@ Deliverables
         --Make sure the physics are good and fun
         
         F001 - add PNG support
+        DONE
+
         F002 - draw a tiled room ******
                with the dungeon  *    * 
                tiles             *    * 
                                  *    * 
                                  ******
+               the lazyfoo spritesheet
+               tutorial will help w/ the alpha
+               transparency problem you
+               are having
         F003 - Draw ghowl in the room
         F004 - Ghowl moves around when keys pressed
         F005 - Room randomly generated
