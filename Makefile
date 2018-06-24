@@ -1,2 +1,2 @@
 default:
-	gcc ghowl.cpp -lSDL2 -lstdc++ -o ghowl 
+	g++ ghowl.cpp -lSDL2 -lSDL2_image -o ghowl 
