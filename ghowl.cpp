@@ -6,16 +6,6 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-enum KeyPressSurfaces
-{
-	KEY_PRESS_SURFACE_DEFAULT,
-	KEY_PRESS_SURFACE_UP,
-	KEY_PRESS_SURFACE_DOWN,
-	KEY_PRESS_SURFACE_LEFT,
-	KEY_PRESS_SURFACE_RIGHT,
-	KEY_PRESS_SURFACE_TOTAL
-};
-
 //Starts up SDL and creates window
 bool init();
 
@@ -34,10 +24,7 @@ SDL_Window* gWindow = NULL;
 //The surface contained by the window
 SDL_Surface* gScreenSurface = NULL;
 
-//The images that correspond to a keypress
-SDL_Surface* gKeyPressSurfaces[ KEY_PRESS_SURFACE_TOTAL ];
-
-SDL_Surface* deer = NULL; 
+SDL_Surface* ghowl = NULL; 
 SDL_Surface* background = NULL; 
 
 //Current displayed image
@@ -57,7 +44,7 @@ bool init()
 	else
 	{
 		//Create window
-		gWindow = SDL_CreateWindow( "GHOWL FANTASY", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "PISSPOUNDER PRESENTS: GHOWL FANTASY", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -86,8 +73,8 @@ bool loadMedia()
 	//Loading success flag
 	bool success = true;
  
-    deer = loadSurface("res/ghowl-sprites.png");
-    if(deer == NULL) {
+    ghowl = loadSurface("res/ghowl-sprites.png");
+    if(ghowl == NULL) {
         printf( "Failed to load image...\n");
         success = false;
     }
@@ -145,11 +132,10 @@ bool loadMedia()
 void close()
 {
 	//Deallocate surfaces
-	for( int i = 0; i < KEY_PRESS_SURFACE_TOTAL; ++i )
-	{
-		SDL_FreeSurface( gKeyPressSurfaces[ i ] );
-		gKeyPressSurfaces[ i ] = NULL;
-	}
+    SDL_FreeSurface(ghowl);
+    SDL_FreeSurface(background);
+    ghowl = NULL;
+    background = NULL;
 
 	//Destroy window
 	SDL_DestroyWindow( gWindow );
@@ -205,7 +191,7 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 
 			//Set default current surface
-			gCurrentSurface = deer;
+			gCurrentSurface = ghowl;
 
 			//While application is running
 			while( !quit )
