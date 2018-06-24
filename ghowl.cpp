@@ -76,7 +76,7 @@ bool loadMedia()
 	//Loading success flag
 	bool success = true;
  
-    deer = loadSurface("deer.bmp");
+    deer = loadSurface("res/deer.bmp");
     if(deer == NULL) {
         printf( "Failed to load image...\n");
         success = false;
