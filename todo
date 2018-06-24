@@ -13,13 +13,22 @@ Deliverables
         --rip off a fun song
     D002 A move around and jump on things tech demo which features scrolling background and tiled world map
         --Make sure the physics are good and fun
+    D003 Scrolling background text backstory thing with augusts funny description
+        "THE GHOWL HAS WRESTED FREE FROM ITS CONTROLLERS GRASP.  SELF EXILED TO THE WAR PLAINS, IT SEARCHES NOW FOR  THE MEANING OF FREEDOM."
+      
         
         F001 - add PNG support
+        DONE
+
         F002 - draw a tiled room ******
                with the dungeon  *    * 
                tiles             *    * 
                                  *    * 
                                  ******
+               the lazyfoo spritesheet
+               tutorial will help w/ the alpha
+               transparency problem you
+               are having
         F003 - Draw ghowl in the room
         F004 - Ghowl moves around when keys pressed
         F005 - Room randomly generated
