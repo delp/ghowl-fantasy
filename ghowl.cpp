@@ -191,6 +191,7 @@ int main( int argc, char* args[] )
 					{
 						quit = true;
 					} /*
+                         //TODO setup sprite moves around in response to user input
 					//User presses a key
 					else if( e.type == SDL_KEYDOWN )
 					{

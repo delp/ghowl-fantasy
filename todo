@@ -1,0 +1,19 @@
+Design - 
+jump around
+shoot and stab things
+gain experience to increase health and damage and used items?
+run around to collect a few things in the level
+get free from the dungeon
+
+F001 - I want to be able to pass a sprite sheet in and select a dood to draw from it
+F002 - I want to be able to animate a dooder based on a sprite sheet set
+F003 - convert to c
+F004 - 
+F005 - loaded sprites have alpha transparency?
+
+
+
+tile out some levels
+
+a level is just a 2d array of integers which correspond to tile types
+
