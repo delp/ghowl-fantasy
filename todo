@@ -1,19 +1,25 @@
+GHOWL // FANTASY
+is a small action RPG / metroidvania influenced game.
+The player moved about in a 2d tiled world map, shooting and stabbing things to level up and gain more health and items.
+
+
+Deliverables
+    D001 A menu select tech demo with selectable options
+        --This is a good one because this is something you want all your games to have
+        --Bouncing ghowl letters that float and jitter?
+        --gradient filled letters
+        --letters have a 3d standoff effect
+        --[like alien 3 NES] letters fade in slowly as title screen lowers over an object [not a planet obv]
+        --rip off a fun song
+    D002 A move around and jump on things tech demo which features scrolling background and tiled world map
+        --Make sure the physics are good and fun
+
 Design - 
 jump around
 shoot and stab things
 gain experience to increase health and damage and used items?
 run around to collect a few things in the level
 get free from the dungeon
-
-F001 - I want to be able to pass a sprite sheet in and select a dood to draw from it
-F002 - I want to be able to animate a dooder based on a sprite sheet set
-F003 - convert to c
-F004 - 
-F005 - loaded sprites have alpha transparency?
-
-
-
-tile out some levels
 
 a level is just a 2d array of integers which correspond to tile types
 
