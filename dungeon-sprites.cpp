@@ -12,7 +12,52 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-bool init() { return true; }
+bool init() { 
+    bool success = true;
+
+    //init SDl
+    if( SDL_Init( SDL_INIT_VIDEO) < 0 ) {
+        printf("Failed to Initialize SDL: %s\n", SDL_GetError() );
+    } else {
+        //Set texture filtering to linear
+        if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ) {
+            printf( "Failed to enable linear texture filtering...");
+        }
+
+        //Create the window
+        gWindow = SDL_CreateWindow( "GHOWL-ARC: GENESYS", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+
+        //Error check
+        if( gWindow == NULL ) {
+            printf( "Couldn't create window: %s\n", SDL_GetError() );
+        } else {
+
+            //create renderer for window
+            gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED);
+
+            //error check
+            if(gRenderer == NULL) {
+                printf( "Couldn't create Renderer: %s\n", SDL_GetError() );
+            } else {
+
+                //init renderer color
+                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+
+                //init PNG loading
+                int imgFlags = IMG_INIT_PNG;
+
+                //TODO: wtf is up with this bitwise and?
+                if( !(IMG_Init( imgFlags) & imgFlags ) ) {
+                    printf( "SDL_image could not initialize: %s\n", IMG_GetError() );
+                    success = false;
+                }
+            }
+        }
+    }
+    return success;
+}
+
 bool loadMedia() { return true; }
 bool close() { return true; }
 
