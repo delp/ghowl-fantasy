@@ -12,6 +12,23 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
+SDL_Texture* mTexture;
+int mWidth;
+int mHeight;
+
+bool init();
+bool loadSpriteSheetTexture();
+void freeExistingTextures();
+
+void freeExistingTextures() {
+    if( mTexture != NULL) {
+        SDL_DestroyTexture(mTexture);
+        mTexture = NULL;
+        mWidth = 0;
+        mHeight = 0;
+    }
+}
+
 bool init() { 
     bool success = true;
 
@@ -58,7 +75,56 @@ bool init() {
     return success;
 }
 
-bool loadMedia() { return true; }
+bool loadSpriteSheetTexture(std::string path) {
+
+    //Get rid of preexisting texture
+    freeExistingTextures();
+
+    //This is the final texture
+    SDL_Texture* newTexture = NULL;
+
+    //load the specified image
+    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+    if( loadedSurface == NULL ) {
+        printf( "Unable to load image %s    SDL_Image Error: %s\n", path.c_str(), IMG_GetError());
+    } else {
+        //Create the color key for the image/surface
+        SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+
+        //Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+        if( newTexture == NULL) {
+            printf( "Unable to create texture from  %s    SDL Error: %s\n", path.c_str(), SDL_GetError());
+        } else {
+            mWidth = loadedSurface->w;
+            mHeight = loadedSurface->h;
+        }
+
+        
+        //get rid of old loaded Surface
+        SDL_FreeSurface( loadedSurface);
+    }
+
+    //Return success
+    mTexture = newTexture;
+    return mTexture != NULL;
+
+}
+
+bool loadMedia() { 
+    bool success = true;
+
+    //load the spritesheet texture
+    if(!loadSpriteSheetTexture("path/to/spritesheet.png") ) {
+        success = false;
+    } else {
+        //set the sprites up, config them
+        //TODO create some SDL_Rect to hold the sprites...
+        //then in the main function you use the gRenderer to render those sprites from the rects....
+    }
+    
+    return success;
+}
 bool close() { return true; }
 
 int main(int argc, char* args[]) {
