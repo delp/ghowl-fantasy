@@ -115,7 +115,7 @@ bool loadMedia() {
     bool success = true;
 
     //load the spritesheet texture
-    if(!loadSpriteSheetTexture("path/to/spritesheet.png") ) {
+    if(!loadSpriteSheetTexture("res/dungeon-tiles-cpc.png") ) {
         success = false;
     } else {
         //set the sprites up, config them
