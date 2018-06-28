@@ -19,6 +19,21 @@ int mHeight;
 bool init();
 bool loadSpriteSheetTexture();
 void freeExistingTextures();
+void render(int x, int y, SDL_Rect* clip);
+
+
+
+void render(int x, int y, SDL_Rect* clip) {
+    SDL_Rect renderQuad = { x, y, mWidth, mHeight };
+
+    if( clip != NULL ) {
+        renderQuad.w = clip->w;
+        renderQuad.h = clip->h;
+    }
+
+    //Render to screen
+    SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
+}
 
 void freeExistingTextures() {
     if( mTexture != NULL) {
@@ -159,6 +174,14 @@ int main(int argc, char* args[]) {
                 SDL_RenderClear( gRenderer );
                 
                 //Draw things (Render things to gRenderer)
+                SDL_Rect spriteClip;
+                spriteClip.x = 0;
+                spriteClip.y = 0;
+                spriteClip.w = 64;
+                spriteClip.h = 64;
+                
+                render(0, 0, &spriteClip);
+                
 
                 //Update screen
                 SDL_RenderPresent( gRenderer );
