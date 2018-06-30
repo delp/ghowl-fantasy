@@ -5,6 +5,7 @@
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+const int SPRITE = 64;
 
 const int LEVEL_WIDTH = 8;
 const int LEVEL_HEIGHT = 6;
@@ -29,7 +30,16 @@ bool init();
 bool loadSpriteSheetTexture();
 void freeExistingTextures();
 void render(int x, int y, SDL_Rect* clip);
+int getRand(int max);
+void initRand();
 
+void initRand() {
+    srand(time(NULL));
+}
+
+int getRand(int max) {
+    return rand() % max;
+}
 
 
 void render(int x, int y, SDL_Rect* clip) {
@@ -169,6 +179,9 @@ int main(int argc, char* args[]) {
 
             //Event handling
             SDL_Event e;
+            
+            //TODO remove this
+            bool doThing = true;
             while(!quit) {
 
                 //handle all Q'd events 
@@ -204,16 +217,23 @@ int main(int argc, char* args[]) {
                 //Clear the screen/draw background
                 SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF); 
                 SDL_RenderClear( gRenderer );
-                
-                //Draw things (Render things to gRenderer)
-                SDL_Rect spriteClip;
-                spriteClip.x = 0;
-                spriteClip.y = 0;
-                spriteClip.w = 64;
-                spriteClip.h = 64;
-                
-                render(0, 0, &spriteClip);
-                
+              
+                for(int y = 0; y < LEVEL_HEIGHT; y++) {
+                    for(int x = 0; x < LEVEL_WIDTH; x++) {
+                        if(tileMap[y][x] == 1) {
+
+                            //Draw things (Render things to gRenderer)
+                            SDL_Rect spriteClip;
+                            spriteClip.x = (getRand(4) * SPRITE);
+                            spriteClip.y = 0;
+                            spriteClip.w = 64;
+                            spriteClip.h = 64;
+
+                            render(x * SPRITE, y * SPRITE, &spriteClip);
+                        }
+                    }
+                } 
+
 
                 //Update screen
                 SDL_RenderPresent( gRenderer );
