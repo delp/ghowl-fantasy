@@ -1,16 +1,34 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <string>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+const int SPRITE = 16;
 
 //The window to render to
 SDL_Window* gWindow = NULL;
 
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
+
+const int LEVEL_WIDTH = 8;
+const int LEVEL_HEIGHT = 6;
+const int tileMap[][8] = {{ 1, 1, 1, 1, 1, 1, 1, 1},
+               { 1, 0, 0, 0, 0, 0, 0, 1},
+               { 0, 0, 0, 0, 0, 0, 0, 1},
+               { 0, 0, 0, 0, 0, 0, 0, 1},
+               { 0, 0, 0, 0, 1, 1, 1, 1},
+               { 1, 1, 1, 1, 1, 1, 1, 1}};
+
+struct level {
+    int w;
+    int h;
+    int* tileMap;
+};
 
 SDL_Texture* mTexture;
 int mWidth;
@@ -20,8 +38,16 @@ bool init();
 bool loadSpriteSheetTexture();
 void freeExistingTextures();
 void render(int x, int y, SDL_Rect* clip);
+int getRand(int max);
+void initRand();
 
+void initRand() {
+    srand(time(NULL));
+}
 
+int getRand(int max) {
+    return rand() % max;
+}
 
 void render(int x, int y, SDL_Rect* clip) {
     SDL_Rect renderQuad = { x, y, mWidth, mHeight };
@@ -45,6 +71,8 @@ void freeExistingTextures() {
 }
 
 bool init() { 
+    //setup RNG
+    initRand();
     bool success = true;
 
     //init SDl
@@ -80,6 +108,9 @@ bool init() {
                 int imgFlags = IMG_INIT_PNG;
 
                 //TODO: wtf is up with this bitwise and?
+                //I imagine it is just a set of flags and we need
+                //to compare the flags that were actually set
+                //with what we requested. That's interesting...
                 if( !(IMG_Init( imgFlags) & imgFlags ) ) {
                     printf( "SDL_image could not initialize: %s\n", IMG_GetError() );
                     success = false;
@@ -195,6 +226,17 @@ int main(int argc, char* args[]) {
                 //Clear the screen/draw background
                 SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF); 
                 SDL_RenderClear( gRenderer );
+
+                //iterate through the 2d array
+                for(int y = 0; y < LEVEL_HEIGHT; y++) {
+                    for(int x = 0; x < LEVEL_WIDTH; x++) {
+                        if(tileMap[y][x] == 1) {
+                            //draw a random tile from the set 1 thru 4
+                            int num = getRand(4);
+                            printf("%d\n", num);
+                       }
+                    }
+                }
                 
                 //Draw things (Render things to gRenderer)
                 SDL_Rect spriteClip;
