@@ -6,6 +6,15 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
+const int LEVEL_WIDTH = 8;
+const int LEVEL_HEIGHT = 6;
+const int tileMap[][8] = {{ 1, 1, 1, 1, 1, 1, 1, 1},
+                { 1, 0, 0, 0, 0, 0, 0, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 1},
+                { 0, 0, 0, 0, 1, 1, 1, 1},
+                { 1, 1, 1, 1, 1, 1, 1, 1}};
+
 //The window to render to
 SDL_Window* gWindow = NULL;
 
