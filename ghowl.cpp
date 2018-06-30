@@ -24,6 +24,8 @@ const int tileMap[][8] = {{ 1, 1, 1, 1, 1, 1, 1, 1},
                { 0, 0, 0, 0, 1, 1, 1, 1},
                { 1, 1, 1, 1, 1, 1, 1, 1}};
 
+const string tilePath = "res/dungeon-tiles-cpc.png";
+
 struct level {
     int w;
     int h;
@@ -161,7 +163,7 @@ bool loadMedia() {
     bool success = true;
 
     //load the spritesheet texture
-    if(!loadSpriteSheetTexture("res/dungeon-tiles-cpc.png") ) {
+    if(!loadSpriteSheetTexture(tilePath) ) {
         success = false;
     } else {
         //set the sprites up, config them
