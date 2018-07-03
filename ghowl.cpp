@@ -5,7 +5,7 @@
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-const int SPRITE = 64;
+const int SPRITE = 80;
 
 const int LEVEL_WIDTH = 8;
 const int LEVEL_HEIGHT = 6;
@@ -180,8 +180,6 @@ int main(int argc, char* args[]) {
             //Event handling
             SDL_Event e;
             
-            //TODO remove this
-            bool doThing = true;
             while(!quit) {
 
                 //handle all Q'd events 
@@ -226,8 +224,12 @@ int main(int argc, char* args[]) {
                             SDL_Rect spriteClip;
                             spriteClip.x = (getRand(4) * SPRITE);
                             spriteClip.y = 0;
-                            spriteClip.w = 64;
-                            spriteClip.h = 64;
+                            spriteClip.w = SPRITE;
+                            spriteClip.h = SPRITE;
+                              
+                            printf("%d, %d, %d, %d\n", spriteClip.x, 
+                                    spriteClip.y, spriteClip.w, 
+                                    spriteClip.h);
 
                             render(x * SPRITE, y * SPRITE, &spriteClip);
                         }
@@ -241,6 +243,7 @@ int main(int argc, char* args[]) {
             }
         }
     }
+
 
     //Free resources, close SDL
     close();
