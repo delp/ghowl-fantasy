@@ -10,7 +10,6 @@ struct ghowl {
     SDL_Texture* spriteSheet;
     int spriteSheetWidth = 75;
     int spriteSheetHeight = 75;
-    
 };
 
 //=====CONSTANTS=====
@@ -42,7 +41,7 @@ int mWidth;
 int mHeight;
 
 bool init();
-bool loadSpriteSheetTexture();
+SDL_Texture* loadSpriteSheetTexture();
 void freeExistingTextures();
 void render(int x, int y, SDL_Rect* clip);
 int getRand(int max);
@@ -124,9 +123,11 @@ bool init() {
     return success;
 }
 
-bool loadSpriteSheetTexture(std::string path) {
+//TODO make this generic
+SDL_Texture* loadSpriteSheetTexture(std::string path) {
 
     //Get rid of preexisting texture
+    //TODO refactor this to be parametric
     freeExistingTextures();
 
     //This is the final texture
@@ -145,6 +146,7 @@ bool loadSpriteSheetTexture(std::string path) {
         if( newTexture == NULL) {
             printf( "Unable to create texture from  %s    SDL Error: %s\n", path.c_str(), SDL_GetError());
         } else {
+            //TODO fix this also
             mWidth = loadedSurface->w;
             mHeight = loadedSurface->h;
         }
@@ -154,21 +156,21 @@ bool loadSpriteSheetTexture(std::string path) {
         SDL_FreeSurface( loadedSurface);
     }
 
-    //Return success
-    mTexture = newTexture;
-    return mTexture != NULL;
+    return newTexture;
 
 }
 
 bool loadMedia() { 
     bool success = true;
 
+    //TODO this is 2 sprite sheets now
     //load the spritesheet texture
-    if(!loadSpriteSheetTexture("res/dungeon-tiles-cpc.png") ) {
+    mTexture = loadSpriteSheetTexture("res/dungeon-tiles-cpc.png");
+    if(mTexture == NULL ) {
         success = false;
     } else {
         //set the sprites up, config them
-        //TODO create some SDL_Rect to hold the sprites...
+        //TODO  ????????????? create some SDL_Rect to hold the sprites...
         //then in the main function you use the gRenderer to render those sprites from the rects....
     }
     
