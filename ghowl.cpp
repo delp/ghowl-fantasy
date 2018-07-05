@@ -3,9 +3,24 @@
 #include <stdio.h>
 #include <string>
 
+
+
+
+struct ghowl {
+    SDL_Texture* spriteSheet;
+    int spriteSheetWidth = 75;
+    int spriteSheetHeight = 75;
+    
+};
+
+//=====CONSTANTS=====
+
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SPRITE = 80;
+
+const int ghowl_w = 75;
+const int ghowl_h = 75;
 
 const int LEVEL_WIDTH = 8;
 const int LEVEL_HEIGHT = 6;
