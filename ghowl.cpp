@@ -47,7 +47,8 @@ int gHeight;
 bool init();
 SDL_Texture* loadSpriteSheetTexture();
 void freeTextures(spriteSheet* s);
-void render(int x, int y, SDL_Rect* clip);
+//TODO make this generic
+void render(spriteSheet* s, int x, int y, SDL_Rect* clip);
 int getRand(int max);
 void initRand();
 
@@ -60,8 +61,8 @@ int getRand(int max) {
 }
 
 
-void render(int x, int y, SDL_Rect* clip) {
-    SDL_Rect renderQuad = { x, y, blocks.width, blocks.height };
+void render(spriteSheet* s, int x, int y, SDL_Rect* clip) {
+    SDL_Rect renderQuad = { x, y, s->width, s->height };
 
     if( clip != NULL ) {
         renderQuad.w = clip->w;
@@ -69,7 +70,7 @@ void render(int x, int y, SDL_Rect* clip) {
     }
 
     //Render to screen
-    SDL_RenderCopy( gRenderer, blocks.texture, clip, &renderQuad );
+    SDL_RenderCopy( gRenderer, s->texture, clip, &renderQuad );
 }
 
 void freeTextures(spriteSheet* s) {
@@ -259,10 +260,18 @@ int main(int argc, char* args[]) {
                             spriteClip.w = SPRITE;
                             spriteClip.h = SPRITE;
                               
-                            render(x * SPRITE, y * SPRITE, &spriteClip);
+                            render(&blocks, x * SPRITE, y * SPRITE, &spriteClip);
                         }
                     }
                 } 
+
+                //Draw the ghowl...
+                SDL_Rect spriteClip;
+                spriteClip.x = 0;
+                spriteClip.y = 0;
+                spriteClip.w = 75;
+                spriteClip.h = 75;
+                render(&dude, 170, 200, &spriteClip);
 
 
                 //Update screen
