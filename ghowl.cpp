@@ -48,7 +48,6 @@ int gHeight;
 bool init();
 SDL_Texture* loadSpriteSheetTexture();
 void freeTextures(spriteSheet* s);
-//TODO make this generic
 void render(spriteSheet* s, int x, int y, SDL_Rect* clip);
 int getRand(int max);
 void initRand();
