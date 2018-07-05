@@ -4,7 +4,7 @@
 #include <string>
 
 struct spriteSheet {
-    SDL_Texture* spriteSheet;
+    SDL_Texture* texture;
     int width = 0;
     int height =0;
 };
@@ -46,7 +46,7 @@ int gHeight;
 
 bool init();
 SDL_Texture* loadSpriteSheetTexture();
-void freeExistingTextures();
+void freeTextures(spriteSheet* s);
 void render(int x, int y, SDL_Rect* clip);
 int getRand(int max);
 void initRand();
@@ -69,15 +69,15 @@ void render(int x, int y, SDL_Rect* clip) {
     }
 
     //Render to screen
-    SDL_RenderCopy( gRenderer, blocks.spriteSheet, clip, &renderQuad );
+    SDL_RenderCopy( gRenderer, blocks.texture, clip, &renderQuad );
 }
 
-void freeExistingTextures() {
-    if( blocks.spriteSheet != NULL) {
-        SDL_DestroyTexture(blocks.spriteSheet);
-        blocks.spriteSheet = NULL;
-        blocks.width = 0;
-        blocks.height = 0;
+void freeTextures(spriteSheet* s) {
+    if( s->texture != NULL) {
+        SDL_DestroyTexture(s->texture);
+        s->texture = NULL;
+        s->width = 0;
+        s->height = 0;
     }
 }
 
@@ -127,12 +127,12 @@ bool init() {
     return success;
 }
 
-//TODO make this generic
-SDL_Texture* loadSpriteSheetTexture(std::string path) {
+bool loadSpriteSheetTexture(spriteSheet* s, std::string path) {
+
+    bool success = true;
 
     //Get rid of preexisting texture
-    //TODO refactor this to be parametric
-    freeExistingTextures();
+    freeTextures(s);
 
     //This is the final texture
     SDL_Texture* newTexture = NULL;
@@ -140,6 +140,7 @@ SDL_Texture* loadSpriteSheetTexture(std::string path) {
     //load the specified image
     SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
     if( loadedSurface == NULL ) {
+        success = false;
         printf( "Unable to load image %s    SDL_Image Error: %s\n", path.c_str(), IMG_GetError());
     } else {
         //Create the color key for the image/surface
@@ -149,10 +150,10 @@ SDL_Texture* loadSpriteSheetTexture(std::string path) {
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
         if( newTexture == NULL) {
             printf( "Unable to create texture from  %s    SDL Error: %s\n", path.c_str(), SDL_GetError());
+            success = false;
         } else {
-            //TODO fix this also
-            blocks.width = loadedSurface->w;
-            blocks.height = loadedSurface->h;
+            s->width = loadedSurface->w;
+            s->height = loadedSurface->h;
         }
 
         
@@ -160,24 +161,32 @@ SDL_Texture* loadSpriteSheetTexture(std::string path) {
         SDL_FreeSurface( loadedSurface);
     }
 
-    return newTexture;
+    s->texture = newTexture;
+    return success;
 
 }
 
 bool loadMedia() { 
     bool success = true;
 
-    //TODO this is 2 sprite sheets now
     //load the spritesheet texture
-    blocks.spriteSheet = loadSpriteSheetTexture("res/dungeon-tiles-cpc.png");
-    if(blocks.spriteSheet == NULL ) {
+    if(!loadSpriteSheetTexture(&blocks, "res/dungeon-tiles-cpc.png")) {
         success = false;
     } else {
         //set the sprites up, config them
         //TODO  ????????????? create some SDL_Rect to hold the sprites...
         //then in the main function you use the gRenderer to render those sprites from the rects....
     }
-    
+
+    //TODO refactor this
+    if(!loadSpriteSheetTexture(&dude, "res/ghowl-sprites.png")) {
+        success = false;
+    } else {
+        //set the sprites up, config them
+        //TODO  ????????????? create some SDL_Rect to hold the sprites...
+        //then in the main function you use the gRenderer to render those sprites from the rects....
+    }
+
     return success;
 }
 bool close() { return true; }
