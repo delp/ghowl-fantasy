@@ -28,13 +28,15 @@ const int tileMap[LEVEL_HEIGHT][LEVEL_WIDTH] =
                 { -1, -1, -1, -1, 1, 0, 2, 1},
                 { 3, 1, 0, 0, 2, 1, 2, 1}};
 
+//=====GLOBALS=====
+
 //The window to render to
 SDL_Window* gWindow = NULL;
 
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-SDL_Texture* mTexture;
+SDL_Texture* tileSpritesheet;
 int mWidth;
 int mHeight;
 
@@ -63,13 +65,13 @@ void render(int x, int y, SDL_Rect* clip) {
     }
 
     //Render to screen
-    SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
+    SDL_RenderCopy( gRenderer, tileSpritesheet, clip, &renderQuad );
 }
 
 void freeExistingTextures() {
-    if( mTexture != NULL) {
-        SDL_DestroyTexture(mTexture);
-        mTexture = NULL;
+    if( tileSpritesheet != NULL) {
+        SDL_DestroyTexture(tileSpritesheet);
+        tileSpritesheet = NULL;
         mWidth = 0;
         mHeight = 0;
     }
@@ -163,8 +165,8 @@ bool loadMedia() {
 
     //TODO this is 2 sprite sheets now
     //load the spritesheet texture
-    mTexture = loadSpriteSheetTexture("res/dungeon-tiles-cpc.png");
-    if(mTexture == NULL ) {
+    tileSpritesheet = loadSpriteSheetTexture("res/dungeon-tiles-cpc.png");
+    if(tileSpritesheet == NULL ) {
         success = false;
     } else {
         //set the sprites up, config them
