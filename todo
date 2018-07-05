@@ -18,15 +18,15 @@ Deliverables
         DONE
 
         F002 - draw a tiled room ******
-               with the dungeon  *    * 
+        DONE   with the dungeon  *    * 
                tiles             *    * 
                                  *    * 
                                  ******
+        F003 - Draw ghowl in the room
                the lazyfoo spritesheet
                tutorial will help w/ the alpha
                transparency problem you
                are having
-        F003 - Draw ghowl in the room
         F004 - Ghowl moves around when keys pressed
         F005 - Room randomly generated
         F006 - Tile collision physics        
