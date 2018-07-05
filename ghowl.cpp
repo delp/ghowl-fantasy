@@ -39,6 +39,7 @@ SDL_Renderer* gRenderer = NULL;
 //The spritesheets
 spriteSheet blocks;
 spriteSheet dude;
+spriteSheet wraith;
 
 SDL_Texture* ghowlSpritesheet;
 int gWidth;
@@ -188,8 +189,19 @@ bool loadMedia() {
         //then in the main function you use the gRenderer to render those sprites from the rects....
     }
 
+     //TODO refactor this
+    if(!loadSpriteSheetTexture(&wraith, "res/wraith-sprites.png")) {
+        success = false;
+    } else {
+        //set the sprites up, config them
+        //TODO  ????????????? create some SDL_Rect to hold the sprites...
+        //then in the main function you use the gRenderer to render those sprites from the rects....
+    }
+
     return success;
 }
+
+//TODO implement this
 bool close() { return true; }
 
 int main(int argc, char* args[]) {
@@ -272,6 +284,16 @@ int main(int argc, char* args[]) {
                 spriteClip.w = 75;
                 spriteClip.h = 75;
                 render(&dude, 170, 200, &spriteClip);
+
+                //Draw the wraith
+                SDL_Rect spriteClip2;
+                spriteClip2.x = 0;
+                spriteClip2.y = 0;
+                spriteClip2.w = 80;
+                spriteClip2.h = 80;
+                render(&wraith, 270, 210, &spriteClip2);
+
+
 
 
                 //Update screen
