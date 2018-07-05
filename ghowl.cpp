@@ -3,16 +3,10 @@
 #include <stdio.h>
 #include <string>
 
-struct ghowl {
+struct spriteSheet {
     SDL_Texture* spriteSheet;
-    int width = 75;
-    int height = 75;
-};
-
-struct tiles {
-    SDL_Texture* spriteSheet;
-    int width = 80;
-    int height = 80;
+    int width = 0;
+    int height =0;
 };
 
 //=====CONSTANTS=====
@@ -43,8 +37,8 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //The spritesheets
-tiles blocks;
-ghowl dude;
+spriteSheet blocks;
+spriteSheet dude;
 
 SDL_Texture* ghowlSpritesheet;
 int gWidth;
