@@ -5,8 +5,14 @@
 
 struct ghowl {
     SDL_Texture* spriteSheet;
-    int spriteSheetWidth = 75;
-    int spriteSheetHeight = 75;
+    int width = 75;
+    int height = 75;
+};
+
+struct tiles {
+    SDL_Texture* spriteSheet;
+    int width = 80;
+    int height = 80;
 };
 
 //=====CONSTANTS=====
@@ -36,9 +42,13 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-SDL_Texture* tileSpritesheet;
-int mWidth;
-int mHeight;
+//The spritesheets
+tiles blocks;
+ghowl dude;
+
+SDL_Texture* ghowlSpritesheet;
+int gWidth;
+int gHeight;
 
 bool init();
 SDL_Texture* loadSpriteSheetTexture();
@@ -57,7 +67,7 @@ int getRand(int max) {
 
 
 void render(int x, int y, SDL_Rect* clip) {
-    SDL_Rect renderQuad = { x, y, mWidth, mHeight };
+    SDL_Rect renderQuad = { x, y, blocks.width, blocks.height };
 
     if( clip != NULL ) {
         renderQuad.w = clip->w;
@@ -65,15 +75,15 @@ void render(int x, int y, SDL_Rect* clip) {
     }
 
     //Render to screen
-    SDL_RenderCopy( gRenderer, tileSpritesheet, clip, &renderQuad );
+    SDL_RenderCopy( gRenderer, blocks.spriteSheet, clip, &renderQuad );
 }
 
 void freeExistingTextures() {
-    if( tileSpritesheet != NULL) {
-        SDL_DestroyTexture(tileSpritesheet);
-        tileSpritesheet = NULL;
-        mWidth = 0;
-        mHeight = 0;
+    if( blocks.spriteSheet != NULL) {
+        SDL_DestroyTexture(blocks.spriteSheet);
+        blocks.spriteSheet = NULL;
+        blocks.width = 0;
+        blocks.height = 0;
     }
 }
 
@@ -147,8 +157,8 @@ SDL_Texture* loadSpriteSheetTexture(std::string path) {
             printf( "Unable to create texture from  %s    SDL Error: %s\n", path.c_str(), SDL_GetError());
         } else {
             //TODO fix this also
-            mWidth = loadedSurface->w;
-            mHeight = loadedSurface->h;
+            blocks.width = loadedSurface->w;
+            blocks.height = loadedSurface->h;
         }
 
         
@@ -165,8 +175,8 @@ bool loadMedia() {
 
     //TODO this is 2 sprite sheets now
     //load the spritesheet texture
-    tileSpritesheet = loadSpriteSheetTexture("res/dungeon-tiles-cpc.png");
-    if(tileSpritesheet == NULL ) {
+    blocks.spriteSheet = loadSpriteSheetTexture("res/dungeon-tiles-cpc.png");
+    if(blocks.spriteSheet == NULL ) {
         success = false;
     } else {
         //set the sprites up, config them
