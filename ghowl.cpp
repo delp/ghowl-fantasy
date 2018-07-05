@@ -9,12 +9,12 @@ const int SPRITE = 80;
 
 const int LEVEL_WIDTH = 8;
 const int LEVEL_HEIGHT = 6;
-const int tileMap[][8] = {{ 1, 1, 1, 1, 1, 1, 1, 1},
-                { 1, 0, 0, 0, 0, 0, 0, 1},
-                { 0, 0, 0, 0, 0, 0, 0, 1},
-                { 0, 0, 0, 0, 0, 0, 0, 1},
-                { 0, 0, 0, 0, 1, 1, 1, 1},
-                { 1, 1, 1, 1, 1, 1, 1, 1}};
+const int tileMap[][8] = {{ 0, 1, 0, 2, 3, 0, 2, 3},
+                { 1, -1, -1, -1, -1, -1, -1, 3},
+                { -1, -1, -1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, 3},
+                { -1, -1, -1, -1, 1, 0, 2, 1},
+                { 3, 1, 0, 0, 2, 1, 2, 1}};
 
 //The window to render to
 SDL_Window* gWindow = NULL;
@@ -218,19 +218,17 @@ int main(int argc, char* args[]) {
               
                 for(int y = 0; y < LEVEL_HEIGHT; y++) {
                     for(int x = 0; x < LEVEL_WIDTH; x++) {
-                        if(tileMap[y][x] == 1) {
+
+                        int tileNum = tileMap[y][x];
+                        if(tileNum >= -1) {
 
                             //Draw things (Render things to gRenderer)
                             SDL_Rect spriteClip;
-                            spriteClip.x = (getRand(4) * SPRITE);
+                            spriteClip.x = (tileNum * SPRITE);
                             spriteClip.y = 0;
                             spriteClip.w = SPRITE;
                             spriteClip.h = SPRITE;
                               
-                            printf("%d, %d, %d, %d\n", spriteClip.x, 
-                                    spriteClip.y, spriteClip.w, 
-                                    spriteClip.h);
-
                             render(x * SPRITE, y * SPRITE, &spriteClip);
                         }
                     }
