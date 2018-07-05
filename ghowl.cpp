@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include <string>
 
-
-
-
 struct ghowl {
     SDL_Texture* spriteSheet;
     int spriteSheetWidth = 75;
@@ -23,7 +20,8 @@ const int ghowl_h = 75;
 
 const int LEVEL_WIDTH = 8;
 const int LEVEL_HEIGHT = 6;
-const int tileMap[LEVEL_HEIGHT][LEVEL_WIDTH] = {{ 0, 1, 0, 2, 3, 0, 2, 3},
+const int tileMap[LEVEL_HEIGHT][LEVEL_WIDTH] = 
+                {{ 0, 1, 0, 2, 3, 0, 2, 3},
                 { 1, -1, -1, -1, -1, -1, -1, 3},
                 { -1, -1, -1, -1, -1, -1, -1, 1},
                 { -1, -1, -1, -1, -1, -1, -1, 3},
