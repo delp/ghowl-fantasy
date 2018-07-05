@@ -9,7 +9,7 @@ const int SPRITE = 80;
 
 const int LEVEL_WIDTH = 8;
 const int LEVEL_HEIGHT = 6;
-const int tileMap[][8] = {{ 0, 1, 0, 2, 3, 0, 2, 3},
+const int tileMap[LEVEL_HEIGHT][LEVEL_WIDTH] = {{ 0, 1, 0, 2, 3, 0, 2, 3},
                 { 1, -1, -1, -1, -1, -1, -1, 3},
                 { -1, -1, -1, -1, -1, -1, -1, 1},
                 { -1, -1, -1, -1, -1, -1, -1, 3},
@@ -213,7 +213,7 @@ int main(int argc, char* args[]) {
                 }
 
                 //Clear the screen/draw background
-                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF); 
+                SDL_SetRenderDrawColor( gRenderer, 0x11, 0x11, 0x00, 0xFF); 
                 SDL_RenderClear( gRenderer );
               
                 for(int y = 0; y < LEVEL_HEIGHT; y++) {
