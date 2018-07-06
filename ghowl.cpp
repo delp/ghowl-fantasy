@@ -113,17 +113,22 @@ void render(spriteSheet* s, int x, int y, SDL_Rect* clip) {
 }
 
 void renderEntity(entity* ent) {
-  //TODO get rect from sprite
-  //SDL_Rect clip = ent->frameArray[ent->currentFrame]
-  //
-  // TODO renderQuad would be dependent on entity position?
-  //  if( clip != NULL ) {
-  //      renderQuad.w = clip->w;
-  //      renderQuad.h = clip->h;
-  //  }
+    //TODO this is also hella dumb
+    SDL_Rect* clip = &ent->sheet->frames[ent->animFrame];
+ 
+    // TODO why is the quad this?
+    SDL_Rect renderQuad = { ent->x, ent->y, ent->sheet->width, ent->sheet->height };
+  
+    // TODO renderQuad would be dependent on entity position?
+
+    if( clip != NULL ) {
+        renderQuad.w = clip->w;
+        renderQuad.h = clip->h;
+    }
+
 
     //Render to screen
-//    SDL_RenderCopy( gRenderer, s->texture, clip, &renderQuad );
+    SDL_RenderCopy( gRenderer, ent->sheet->texture, clip, &renderQuad );
 }
 
 
@@ -333,12 +338,14 @@ int main(int argc, char* args[]) {
                 } 
 
                 //Draw the ghowl...
-                SDL_Rect spriteClip;
-                spriteClip.x = 0;
-                spriteClip.y = 0;
-                spriteClip.w = GHOWL_SPRITE_WIDTH;
-                spriteClip.h = GHOWL_SPRITE_WIDTH;
-                render(&ghowlSheet, 170, 200, &spriteClip);
+//                SDL_Rect spriteClip;
+  //              spriteClip.x = 0;
+    //            spriteClip.y = 0;
+      //          spriteClip.w = GHOWL_SPRITE_WIDTH;
+        //        spriteClip.h = GHOWL_SPRITE_WIDTH;
+          //      render(&ghowlSheet, 170, 200, &spriteClip);
+
+                renderEntity(&ghowlEntity);
 
                 //Draw the wraith
                 SDL_Rect spriteClip2;
