@@ -13,8 +13,6 @@ struct spriteSheet {
     SDL_Rect* frames;
 };
 
-//TODO Maybe there should be an 'entity' struct that has state information (animation, location, etc...)
-
 struct entity {
     spriteSheet* sheet;
     int x;
@@ -36,9 +34,6 @@ const int NUM_TILE_SPRITES = 4;
 
 const int WRAITH_SPRITE_WIDTH = 80;
 const int NUM_WRAITH_SPRITES = 5;
-
-const int ghowl_w = 75;
-const int ghowl_h = 75;
 
 const int LEVEL_WIDTH = 8;
 const int LEVEL_HEIGHT = 6;
@@ -90,7 +85,6 @@ SDL_Rect wraithFrames[] = {
 spriteSheet blocks = { NULL, 0, 0, NUM_TILE_SPRITES } ;
 spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES, &ghowlFrames[0] } ; //TODO lol this is dumb as hell
 spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;
-//ghowlSheet.frames = 0;
 
 entity ghowlEntity = {&ghowlSheet, 170, 200, 0} ;
 entity wraithEntity = {&wraithSheet, 270, 210, 0} ;
@@ -138,8 +132,6 @@ void renderEntity(entity* ent) {
     // TODO why is the quad this?
     SDL_Rect renderQuad = { ent->x, ent->y, ent->sheet->width, ent->sheet->height };
   
-    // TODO renderQuad would be dependent on entity position?
-
     if( clip != NULL ) {
         renderQuad.w = clip->w;
         renderQuad.h = clip->h;
