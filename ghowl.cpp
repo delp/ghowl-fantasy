@@ -64,8 +64,11 @@ SDL_Renderer* gRenderer = NULL;
 
 //The spritesheets
 spriteSheet blocks = { NULL, 0, 0, NUM_TILE_SPRITES } ;
-spriteSheet dude = { NULL, 0, 0, NUM_GHOWL_SPRITES } ;
-spriteSheet wraith = { NULL, 0, 0, NUM_WRAITH_SPRITES } ;
+spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES } ;
+spriteSheet wraithSheet= { NULL, 0, 0, NUM_WRAITH_SPRITES } ;
+
+entity ghowlEntity = {&ghowlSheet, 170, 200, 0} ;
+entity wraithEntity = {&wraithSheet, 270, 210, 0} ;
 
 bool init();
 SDL_Texture* loadSpriteSheetTexture();
@@ -219,7 +222,7 @@ bool loadMedia() {
     }
 
     //TODO refactor this
-    if(!loadSpriteSheetTexture(&dude, "res/ghowl-sprites.png")) {
+    if(!loadSpriteSheetTexture(&ghowlSheet, "res/ghowl-sprites.png")) {
         success = false;
     } else {
         //set the sprites up, config them
@@ -228,7 +231,7 @@ bool loadMedia() {
     }
 
      //TODO refactor this
-    if(!loadSpriteSheetTexture(&wraith, "res/wraith-sprites.png")) {
+    if(!loadSpriteSheetTexture(&wraithSheet, "res/wraith-sprites.png")) {
         success = false;
     } else {
         //set the sprites up, config them
@@ -321,7 +324,7 @@ int main(int argc, char* args[]) {
                 spriteClip.y = 0;
                 spriteClip.w = GHOWL_SPRITE_WIDTH;
                 spriteClip.h = GHOWL_SPRITE_WIDTH;
-                render(&dude, 170, 200, &spriteClip);
+                render(&ghowlSheet, 170, 200, &spriteClip);
 
                 //Draw the wraith
                 SDL_Rect spriteClip2;
@@ -329,7 +332,7 @@ int main(int argc, char* args[]) {
                 spriteClip2.y = 0;
                 spriteClip2.w = WRAITH_SPRITE_WIDTH;
                 spriteClip2.h = WRAITH_SPRITE_WIDTH;
-                render(&wraith, 270, 210, &spriteClip2);
+                render(&wraithSheet, 270, 210, &spriteClip2);
 
 
 
