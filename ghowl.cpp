@@ -15,9 +15,10 @@ struct spriteSheet {
     int width = 0;
     int height = 0;
     int numberOfSprites;
+    SDL_Rect* frames;
 };
 
-//TODO Maybe there should be an 'entity' struct that has state information (animation, locatoin, etc...)
+//TODO Maybe there should be an 'entity' struct that has state information (animation, location, etc...)
 
 struct entity {
     spriteSheet* sheet;
@@ -63,9 +64,22 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //The spritesheets
+//TODO honestly this is going to have to be done in a less confusing way in the future
+SDL_Rect ghowlFrames[] = { 
+        SDL_Rect{0, 0, 
+            GHOWL_SPRITE_WIDTH, GHOWL_SPRITE_WIDTH }, 
+        SDL_Rect{GHOWL_SPRITE_WIDTH, 0, 
+            GHOWL_SPRITE_WIDTH, GHOWL_SPRITE_WIDTH }, 
+        SDL_Rect{GHOWL_SPRITE_WIDTH * 2, 0,    
+            GHOWL_SPRITE_WIDTH, GHOWL_SPRITE_WIDTH }, 
+        SDL_Rect{GHOWL_SPRITE_WIDTH * 3, 0, 
+            GHOWL_SPRITE_WIDTH, GHOWL_SPRITE_WIDTH }, 
+                       } ;
+
 spriteSheet blocks = { NULL, 0, 0, NUM_TILE_SPRITES } ;
-spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES } ;
-spriteSheet wraithSheet= { NULL, 0, 0, NUM_WRAITH_SPRITES } ;
+spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES, &ghowlFrames[0] } ; //TODO lol this is dumb as hell
+spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES } ;
+//ghowlSheet.frames = 0;
 
 entity ghowlEntity = {&ghowlSheet, 170, 200, 0} ;
 entity wraithEntity = {&wraithSheet, 270, 210, 0} ;
@@ -334,16 +348,12 @@ int main(int argc, char* args[]) {
                 spriteClip2.h = WRAITH_SPRITE_WIDTH;
                 render(&wraithSheet, 270, 210, &spriteClip2);
 
-
-
-
                 //Update screen
                 SDL_RenderPresent( gRenderer );
 
             }
         }
     }
-
 
     //Free resources, close SDL
     close();
