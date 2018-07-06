@@ -3,13 +3,8 @@
 #include <stdio.h>
 #include <string>
 
-//TODO maybe the spritesheet should contain the array of SDL Rect that define its various frames
 //TODO maybe ultimately the spritesheet should have some file with metadata about its layout...
-// SDL_Rect spriteClip;
-// spriteClip.x = (tileNum * SPRITE);
-// spriteClip.y = 0;
-// spriteClip.w = SPRITE;
-// spriteClip.h = SPRITE;
+
 struct spriteSheet {
     SDL_Texture* texture;
     int width = 0;
@@ -76,9 +71,25 @@ SDL_Rect ghowlFrames[] = {
             GHOWL_SPRITE_WIDTH, GHOWL_SPRITE_WIDTH }, 
                        } ;
 
+SDL_Rect wraithFrames[] = { 
+        SDL_Rect{0, 0, 
+            WRAITH_SPRITE_WIDTH, WRAITH_SPRITE_WIDTH }, 
+        SDL_Rect{WRAITH_SPRITE_WIDTH, 0, 
+            WRAITH_SPRITE_WIDTH, WRAITH_SPRITE_WIDTH }, 
+        SDL_Rect{WRAITH_SPRITE_WIDTH * 2, 0,    
+            WRAITH_SPRITE_WIDTH, WRAITH_SPRITE_WIDTH }, 
+        SDL_Rect{WRAITH_SPRITE_WIDTH * 3, 0, 
+            WRAITH_SPRITE_WIDTH, WRAITH_SPRITE_WIDTH }, 
+        SDL_Rect{WRAITH_SPRITE_WIDTH * 4, 0, 
+            WRAITH_SPRITE_WIDTH, WRAITH_SPRITE_WIDTH }, 
+                       } ;
+
+
+
+
 spriteSheet blocks = { NULL, 0, 0, NUM_TILE_SPRITES } ;
 spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES, &ghowlFrames[0] } ; //TODO lol this is dumb as hell
-spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES } ;
+spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;
 //ghowlSheet.frames = 0;
 
 entity ghowlEntity = {&ghowlSheet, 170, 200, 0} ;
@@ -110,6 +121,14 @@ void render(spriteSheet* s, int x, int y, SDL_Rect* clip) {
 
     //Render to screen
     SDL_RenderCopy( gRenderer, s->texture, clip, &renderQuad );
+}
+
+//TODO REMOVE THIS TEST CODE
+void updateFrames(entity* ent) {
+    ent->animFrame++;
+    if(ent->animFrame >= ent->sheet->numberOfSprites) {
+        ent->animFrame = 0;
+    }
 }
 
 void renderEntity(entity* ent) {
@@ -296,15 +315,16 @@ int main(int argc, char* args[]) {
                             break;
 
                             case SDLK_UP:
-                            //
+                            updateFrames(&ghowlEntity);
                             break;
                             
                             case SDLK_DOWN:
-                            //
+                            updateFrames(&wraithEntity);
+                            updateFrames(&ghowlEntity);
                             break;
 
                             case SDLK_LEFT:
-                            //
+                            updateFrames(&wraithEntity);
                             break;
 
                             case SDLK_RIGHT:
@@ -337,27 +357,11 @@ int main(int argc, char* args[]) {
                     }
                 } 
 
-                //Draw the ghowl...
-//                SDL_Rect spriteClip;
-  //              spriteClip.x = 0;
-    //            spriteClip.y = 0;
-      //          spriteClip.w = GHOWL_SPRITE_WIDTH;
-        //        spriteClip.h = GHOWL_SPRITE_WIDTH;
-          //      render(&ghowlSheet, 170, 200, &spriteClip);
-
                 renderEntity(&ghowlEntity);
-
-                //Draw the wraith
-                SDL_Rect spriteClip2;
-                spriteClip2.x = 0;
-                spriteClip2.y = 0;
-                spriteClip2.w = WRAITH_SPRITE_WIDTH;
-                spriteClip2.h = WRAITH_SPRITE_WIDTH;
-                render(&wraithSheet, 270, 210, &spriteClip2);
+                renderEntity(&wraithEntity);
 
                 //Update screen
                 SDL_RenderPresent( gRenderer );
-
             }
         }
     }
