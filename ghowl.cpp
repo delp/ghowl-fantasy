@@ -41,10 +41,6 @@ spriteSheet blocks;
 spriteSheet dude;
 spriteSheet wraith;
 
-SDL_Texture* ghowlSpritesheet;
-int gWidth;
-int gHeight;
-
 bool init();
 SDL_Texture* loadSpriteSheetTexture();
 void freeTextures(spriteSheet* s);
