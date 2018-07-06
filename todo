@@ -30,7 +30,12 @@ Deliverables
         F005 - Room randomly generated
         F006 - Tile collision physics        
         F007 - Ghowl jump
+
         F008 - animation from sprite sheet
+        DONE
+
+        F009 - Refactor: Fix all TODO's, think about encapsulation?
+               Add all the null pointer checks? etc
 
     D003 Scrolling background text backstory thing with augusts funny description
         "THE GHOWL HAS WRESTED FREE FROM
