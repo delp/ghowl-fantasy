@@ -4,7 +4,6 @@
 #include <string>
 
 //TODO maybe ultimately the spritesheet should have some file with metadata about its layout...
-
 struct spriteSheet {
     SDL_Texture* texture;
     int width = 0;
@@ -89,6 +88,8 @@ spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;
 entity ghowlEntity = {&ghowlSheet, 170, 200, 0} ;
 entity wraithEntity = {&wraithSheet, 270, 210, 0} ;
 
+//=====FUNCTION DEFS=====
+
 bool init();
 SDL_Texture* loadSpriteSheetTexture();
 void freeTextures(spriteSheet* s);
@@ -126,6 +127,7 @@ void updateFrames(entity* ent) {
 }
 
 void renderEntity(entity* ent) {
+    //TODO add a null check
     //TODO this is also hella dumb
     SDL_Rect* clip = &ent->sheet->frames[ent->animFrame];
  
@@ -136,7 +138,6 @@ void renderEntity(entity* ent) {
         renderQuad.w = clip->w;
         renderQuad.h = clip->h;
     }
-
 
     //Render to screen
     SDL_RenderCopy( gRenderer, ent->sheet->texture, clip, &renderQuad );
