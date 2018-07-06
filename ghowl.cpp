@@ -71,6 +71,7 @@ bool init();
 SDL_Texture* loadSpriteSheetTexture();
 void freeTextures(spriteSheet* s);
 void render(spriteSheet* s, int x, int y, SDL_Rect* clip);
+void renderEntity(entity* ent);
 int getRand(int max);
 void initRand();
 
@@ -93,6 +94,23 @@ void render(spriteSheet* s, int x, int y, SDL_Rect* clip) {
     //Render to screen
     SDL_RenderCopy( gRenderer, s->texture, clip, &renderQuad );
 }
+
+void renderEntity(entity* ent) {
+  //TODO get rect from sprite
+  //SDL_Rect clip = ent->frameArray[ent->currentFrame]
+  //
+  // TODO renderQuad would be dependent on entity position?
+  //  if( clip != NULL ) {
+  //      renderQuad.w = clip->w;
+  //      renderQuad.h = clip->h;
+  //  }
+
+    //Render to screen
+//    SDL_RenderCopy( gRenderer, s->texture, clip, &renderQuad );
+}
+
+
+
 
 void freeTextures(spriteSheet* s) {
     if( s->texture != NULL) {
