@@ -14,6 +14,7 @@ struct spriteSheet {
     SDL_Texture* texture;
     int width = 0;
     int height = 0;
+    int numberOfSprites;
 };
 
 //TODO Maybe there should be an 'entity' struct that has state information (animation, locatoin, etc...)
@@ -32,8 +33,13 @@ const int SCREEN_HEIGHT = 480;
 const int SPRITE = 80;
 
 const int GHOWL_SPRITE_WIDTH = 75;
+const int NUM_GHOWL_SPRITES = 4;
+
 const int TILE_SPRITE_WIDTH = 80;
+const int NUM_TILE_SPRITES = 4;
+
 const int WRAITH_SPRITE_WIDTH = 80;
+const int NUM_WRAITH_SPRITES = 5;
 
 const int ghowl_w = 75;
 const int ghowl_h = 75;
@@ -57,9 +63,9 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //The spritesheets
-spriteSheet blocks;
-spriteSheet dude;
-spriteSheet wraith;
+spriteSheet blocks = { NULL, 0, 0, NUM_TILE_SPRITES } ;
+spriteSheet dude = { NULL, 0, 0, NUM_GHOWL_SPRITES } ;
+spriteSheet wraith = { NULL, 0, 0, NUM_WRAITH_SPRITES } ;
 
 bool init();
 SDL_Texture* loadSpriteSheetTexture();
