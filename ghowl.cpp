@@ -3,10 +3,26 @@
 #include <stdio.h>
 #include <string>
 
+//TODO maybe the spritesheet should contain the array of SDL Rect that define its various frames
+//TODO maybe ultimately the spritesheet should have some file with metadata about its layout...
+// SDL_Rect spriteClip;
+// spriteClip.x = (tileNum * SPRITE);
+// spriteClip.y = 0;
+// spriteClip.w = SPRITE;
+// spriteClip.h = SPRITE;
 struct spriteSheet {
     SDL_Texture* texture;
     int width = 0;
-    int height =0;
+    int height = 0;
+};
+
+//TODO Maybe there should be an 'entity' struct that has state information (animation, locatoin, etc...)
+
+struct entity {
+    spriteSheet* sheet;
+    int x;
+    int y;
+    int animFrame;
 };
 
 //=====CONSTANTS=====
@@ -14,6 +30,10 @@ struct spriteSheet {
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SPRITE = 80;
+
+const int GHOWL_SPRITE_WIDTH = 75;
+const int TILE_SPRITE_WIDTH = 80;
+const int WRAITH_SPRITE_WIDTH = 80;
 
 const int ghowl_w = 75;
 const int ghowl_h = 75;
@@ -55,7 +75,6 @@ void initRand() {
 int getRand(int max) {
     return rand() % max;
 }
-
 
 void render(spriteSheet* s, int x, int y, SDL_Rect* clip) {
     SDL_Rect renderQuad = { x, y, s->width, s->height };
@@ -276,16 +295,16 @@ int main(int argc, char* args[]) {
                 SDL_Rect spriteClip;
                 spriteClip.x = 0;
                 spriteClip.y = 0;
-                spriteClip.w = 75;
-                spriteClip.h = 75;
+                spriteClip.w = GHOWL_SPRITE_WIDTH;
+                spriteClip.h = GHOWL_SPRITE_WIDTH;
                 render(&dude, 170, 200, &spriteClip);
 
                 //Draw the wraith
                 SDL_Rect spriteClip2;
                 spriteClip2.x = 0;
                 spriteClip2.y = 0;
-                spriteClip2.w = 80;
-                spriteClip2.h = 80;
+                spriteClip2.w = WRAITH_SPRITE_WIDTH;
+                spriteClip2.h = WRAITH_SPRITE_WIDTH;
                 render(&wraith, 270, 210, &spriteClip2);
 
 
