@@ -21,6 +21,7 @@ struct entity {
 
 //=====CONSTANTS=====
 
+//TODO fix the sprite exports make them 16!!!!
 //FAMICOM screen width
 const int FAM_W = 256;
 const int FAM_H = 240;
