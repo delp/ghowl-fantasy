@@ -21,8 +21,19 @@ struct entity {
 
 //=====CONSTANTS=====
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+//FAMICOM screen width
+const int FAM_W = 256;
+const int FAM_H = 240;
+//metroid tiles
+const int TILE_W = 16;
+const int TILE_H = 16;
+//so a metroid style tiled area would be 16 tiles wide and 15 tiles tall
+
+//TODO So actually this window dimension is going to be
+//FAM_W * 3
+//FAM_H * 3
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 const int SPRITE = 80;
 
 const int GHOWL_SPRITE_WIDTH = 75;
@@ -34,15 +45,17 @@ const int NUM_TILE_SPRITES = 4;
 const int WRAITH_SPRITE_WIDTH = 80;
 const int NUM_WRAITH_SPRITES = 5;
 
-const int LEVEL_WIDTH = 8;
-const int LEVEL_HEIGHT = 6;
+const int LEVEL_WIDTH = 10;
+const int LEVEL_HEIGHT = 8;
 const int tileMap[LEVEL_HEIGHT][LEVEL_WIDTH] = 
-                {{ 0, 1, 0, 2, 3, 0, 2, 3},
-                { 1, -1, -1, -1, -1, -1, -1, 3},
-                { -1, -1, -1, -1, -1, -1, -1, 1},
-                { -1, -1, -1, -1, -1, -1, -1, 3},
-                { -1, -1, -1, -1, 1, 0, 2, 1},
-                { 3, 1, 0, 0, 2, 1, 2, 1}};
+                {{ 0, 1, 0, 2, 3, 0, 2, 3, 1, 1,},
+                { 1, -1, -1, -1, -1, -1, -1, -1, -1, 3},
+                { -1, -1, -1, -1, -1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1 -1, -1, -1, -1, 3},
+                { -1, -1, -1, -1, -1 -1, -1, -1, -1, 3},
+                { -1, -1, -1, -1, 1, 0, 0, 0, 2, 1},
+                { 3, 1, 0, 0, 0, 0, 2, 1, 2, 1}};
 
 //=====GLOBALS=====
 
