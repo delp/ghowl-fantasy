@@ -21,7 +21,13 @@ struct entity {
 
 //=====CONSTANTS=====
 
-//TODO can you use SDLRenderCopy to stretch the spritesheet texture after load?
+/*TODO can you use SDLRenderCopy to stretch the spritesheet texture after load?
+int SDL_RenderCopy(SDL_Renderer*   renderer,
+                   SDL_Texture*    texture,
+                   const SDL_Rect* srcrect,
+                   const SDL_Rect* dstrect)
+                   */
+
 //TODO fix the sprite exports make them 16!!!!
 //FAMICOM screen width
 const int FAM_W = 256;
