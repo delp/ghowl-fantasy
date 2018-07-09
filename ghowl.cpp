@@ -21,6 +21,7 @@ struct entity {
 
 //=====CONSTANTS=====
 
+//TODO can you use SDLRenderCopy to stretch the spritesheet texture after load?
 //TODO fix the sprite exports make them 16!!!!
 //FAMICOM screen width
 const int FAM_W = 256;
