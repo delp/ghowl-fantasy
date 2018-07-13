@@ -104,7 +104,7 @@ SDL_Rect wraithFrames[] = {
 
 spriteSheet blocks = { NULL, 0, 0, NUM_TILE_SPRITES } ;
 spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES, &ghowlFrames[0] } ; //TODO lol this is dumb as hell
-spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;
+spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;  //....or is it?
 
 entity ghowlEntity = {&ghowlSheet, 170, 200, 0} ;
 entity wraithEntity = {&wraithSheet, 270, 210, 0} ;
@@ -315,6 +315,9 @@ int main(int argc, char* args[]) {
 
             //Event handling
             SDL_Event e;
+
+            //tales ov da frame counter
+            int countedFrames = 0;
             
             while(!quit) {
 
@@ -374,8 +377,20 @@ int main(int argc, char* args[]) {
                 renderEntity(&ghowlEntity);
                 renderEntity(&wraithEntity);
 
+                int time_ms = SDL_GetTicks();
+                float avgFPS = countedFrames / ( time_ms / 1000.f );
+                if( avgFPS > 2000000 ) {
+                    avgFPS = 0;  
+                }
+
+
                 //Update screen
                 SDL_RenderPresent( gRenderer );
+                countedFrames++;
+                printf("counted frames: %d\n", countedFrames);
+                printf("time_ms: %d\n", time_ms);
+                printf("time_sec: %f\n", time_ms / 1000.f);
+                printf("FPS: %f\n", avgFPS);
             }
         }
     }
