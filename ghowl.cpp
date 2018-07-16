@@ -21,13 +21,6 @@ struct entity {
 
 //=====CONSTANTS=====
 
-/*TODO can you use SDLRenderCopy to stretch the spritesheet texture after load?
-int SDL_RenderCopy(SDL_Renderer*   renderer,
-                   SDL_Texture*    texture,
-                   const SDL_Rect* srcrect,
-                   const SDL_Rect* dstrect)
-                   */
-//TODO fix the sprite exports make them 16!!!!
 //FAMICOM screen width
 const int FAM_W = 256;
 const int FAM_H = 240;
@@ -53,23 +46,27 @@ const int NUM_TILE_SPRITES = 4;
 const int WRAITH_SPRITE_WIDTH = 16;
 const int NUM_WRAITH_SPRITES = 5;
 
+const int NUM_GREENERY_SPRITES = 6;
+const int GREENERY_SPRITE = 16;
+
+
 const int LEVEL_WIDTH = 16;
 const int LEVEL_HEIGHT = 15;
 const int tileMap[LEVEL_HEIGHT][LEVEL_WIDTH] = 
-                {{ 0, 1, 0, 2, 3, 0, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1},
+                {{ 0, 1, -1, -1, -1, 0, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1},
                 { 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3},
                 { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, -1, 2},
                 { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2},
+                { -1, -1, -1, 1, 1, 1, -1, -1, -1, -1, -1, -1, 1, -1, -1, 2},
                 { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3},
                 { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3},
+                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2},
+                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1},
+                { -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 { 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1}};
 
 
@@ -107,13 +104,27 @@ SDL_Rect wraithFrames[] = {
             WRAITH_SPRITE_WIDTH, WRAITH_SPRITE_WIDTH }, 
                        } ;
 
+SDL_Rect greeneryFrames[] = {
+    SDL_Rect{0, 0,
+        GREENERY_SPRITE, GREENERY_SPRITE},
+    SDL_Rect{GREENERY_SPRITE, 0,
+        GREENERY_SPRITE, GREENERY_SPRITE}, 
+    SDL_Rect{GREENERY_SPRITE * 2, 0,
+        GREENERY_SPRITE, GREENERY_SPRITE},
+    SDL_Rect{GREENERY_SPRITE * 3, 0,
+        GREENERY_SPRITE, GREENERY_SPRITE},
+    SDL_Rect{GREENERY_SPRITE * 3, 0,
+        GREENERY_SPRITE, GREENERY_SPRITE}, 
+    SDL_Rect{GREENERY_SPRITE * 3, 0,
+        GREENERY_SPRITE, GREENERY_SPRITE} };
 
 spriteSheet blocks = { NULL, 0, 0, NUM_TILE_SPRITES } ;
 spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES, &ghowlFrames[0] } ; //TODO lol this is dumb as hell
 spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;  //....or is it?
+spriteSheet greenerySheet = {NULL, 0, 0, NUM_GREENERY_SPRITES, &greeneryFrames[0] }; 
 
-entity ghowlEntity = {&ghowlSheet, 40, 46, 0} ;
-entity wraithEntity = {&wraithSheet, 70, 30, 0} ;
+entity ghowlEntity = {&ghowlSheet, 50, 64, 0} ;
+entity wraithEntity = {&wraithSheet, 85, 62, 0} ;
 
 //=====FUNCTION DEFS=====
 
@@ -302,6 +313,15 @@ bool loadMedia() {
         //TODO  ????????????? create some SDL_Rect to hold the sprites...
         //then in the main function you use the gRenderer to render those sprites from the rects....
     }
+    
+    //TODO refactor this
+    if(!loadSpriteSheetTexture(&greenerySheet, "res/Greenery.png")) {
+        success = false;
+    } else {
+        //set the sprites up, config them
+        //TODO  ????????????? create some SDL_Rect to hold the sprites...
+        //then in the main function you use the gRenderer to render those sprites from the rects....
+    }
 
     return success;
 }
@@ -385,6 +405,35 @@ int main(int argc, char* args[]) {
                         }
                     }
                 } 
+
+                SDL_Rect greenClip;
+                greenClip.x = GREENERY_SPRITE * 3;
+                greenClip.y = 0;
+                greenClip.w = GREENERY_SPRITE;
+                greenClip.h = GREENERY_SPRITE * 2;
+
+                render(&greenerySheet, 192, 48, &greenClip);
+
+
+
+                SDL_Rect greenClip2;
+                greenClip2.x = GREENERY_SPRITE * 4;
+                greenClip2.y = 0;
+                greenClip2.w = GREENERY_SPRITE;
+                greenClip2.h = GREENERY_SPRITE * 2;
+
+                render(&greenerySheet, 128, 176, &greenClip2);
+
+
+                SDL_Rect greenClip3;
+                greenClip3.x = GREENERY_SPRITE * 5;
+                greenClip3.y = 0;
+                greenClip3.w = GREENERY_SPRITE;
+                greenClip3.h = GREENERY_SPRITE * 2;
+
+                render(&greenerySheet, 224, 96, &greenClip3);
+
+
 
                 renderEntity(&ghowlEntity);
                 renderEntity(&wraithEntity);
