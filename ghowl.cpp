@@ -27,11 +27,11 @@ int SDL_RenderCopy(SDL_Renderer*   renderer,
                    const SDL_Rect* srcrect,
                    const SDL_Rect* dstrect)
                    */
-
 //TODO fix the sprite exports make them 16!!!!
 //FAMICOM screen width
 const int FAM_W = 256;
 const int FAM_H = 240;
+const int SCALE_FACTOR = 2;
 //metroid tiles
 const int TILE_W = 16;
 const int TILE_H = 16;
@@ -40,30 +40,38 @@ const int TILE_H = 16;
 //TODO So actually this window dimension is going to be
 //FAM_W * 3
 //FAM_H * 3
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_WIDTH = FAM_W * SCALE_FACTOR; 
+const int SCREEN_HEIGHT = FAM_H * SCALE_FACTOR;
 const int SPRITE = 80;
 
-const int GHOWL_SPRITE_WIDTH = 75;
+const int GHOWL_SPRITE_WIDTH = 16;
 const int NUM_GHOWL_SPRITES = 4;
 
-const int TILE_SPRITE_WIDTH = 80;
+const int TILE_SPRITE_WIDTH = 16;
 const int NUM_TILE_SPRITES = 4;
 
-const int WRAITH_SPRITE_WIDTH = 80;
+const int WRAITH_SPRITE_WIDTH = 16;
 const int NUM_WRAITH_SPRITES = 5;
 
-const int LEVEL_WIDTH = 10;
-const int LEVEL_HEIGHT = 8;
+const int LEVEL_WIDTH = 16;
+const int LEVEL_HEIGHT = 15;
 const int tileMap[LEVEL_HEIGHT][LEVEL_WIDTH] = 
-                {{ 0, 1, 0, 2, 3, 0, 2, 3, 1, 1,},
-                { 1, -1, -1, -1, -1, -1, -1, -1, -1, 3},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, 1},
-                { -1, -1, -1, -1, -1, -1, -1, -1, -1, 1},
-                { -1, -1, -1, -1, -1 -1, -1, -1, -1, 3},
-                { -1, -1, -1, -1, -1 -1, -1, -1, -1, 3},
-                { -1, -1, -1, -1, 1, 0, 0, 0, 2, 1},
-                { 3, 1, 0, 0, 0, 0, 2, 1, 2, 1}};
+                {{ 0, 1, 0, 2, 3, 0, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1},
+                { 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1}};
+
 
 //=====GLOBALS=====
 
@@ -100,14 +108,12 @@ SDL_Rect wraithFrames[] = {
                        } ;
 
 
-
-
 spriteSheet blocks = { NULL, 0, 0, NUM_TILE_SPRITES } ;
 spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES, &ghowlFrames[0] } ; //TODO lol this is dumb as hell
 spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;  //....or is it?
 
-entity ghowlEntity = {&ghowlSheet, 170, 200, 0} ;
-entity wraithEntity = {&wraithSheet, 270, 210, 0} ;
+entity ghowlEntity = {&ghowlSheet, 40, 46, 0} ;
+entity wraithEntity = {&wraithSheet, 70, 30, 0} ;
 
 //=====FUNCTION DEFS=====
 
@@ -265,7 +271,7 @@ bool loadMedia() {
     bool success = true;
 
     //load the spritesheet texture
-    if(!loadSpriteSheetTexture(&blocks, "res/dungeon-tiles-cpc.png")) {
+    if(!loadSpriteSheetTexture(&blocks, "res/tiles.png")) {
         success = false;
     } else {
         //set the sprites up, config them
@@ -274,7 +280,7 @@ bool loadMedia() {
     }
 
     //TODO refactor this
-    if(!loadSpriteSheetTexture(&ghowlSheet, "res/ghowl-sprites.png")) {
+    if(!loadSpriteSheetTexture(&ghowlSheet, "res/ghowl.png")) {
         success = false;
     } else {
         //set the sprites up, config them
@@ -283,7 +289,7 @@ bool loadMedia() {
     }
 
      //TODO refactor this
-    if(!loadSpriteSheetTexture(&wraithSheet, "res/wraith-sprites.png")) {
+    if(!loadSpriteSheetTexture(&wraithSheet, "res/wraith.png")) {
         success = false;
     } else {
         //set the sprites up, config them
@@ -364,12 +370,12 @@ int main(int argc, char* args[]) {
 
                             //Draw things (Render things to gRenderer)
                             SDL_Rect spriteClip;
-                            spriteClip.x = (tileNum * SPRITE);
+                            spriteClip.x = (tileNum * TILE_SPRITE_WIDTH );
                             spriteClip.y = 0;
-                            spriteClip.w = SPRITE;
-                            spriteClip.h = SPRITE;
+                            spriteClip.w = TILE_SPRITE_WIDTH;
+                            spriteClip.h = TILE_SPRITE_WIDTH;
                               
-                            render(&blocks, x * SPRITE, y * SPRITE, &spriteClip);
+                            render(&blocks, x * TILE_SPRITE_WIDTH, y * TILE_SPRITE_WIDTH, &spriteClip);
                         }
                     }
                 } 
