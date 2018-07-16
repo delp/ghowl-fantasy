@@ -190,7 +190,7 @@ bool init() {
         printf("Failed to Initialize SDL: %s\n", SDL_GetError() );
     } else {
         //Set texture filtering to linear
-        if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ) {
+        if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "0" ) ) {
             printf( "Failed to enable linear texture filtering...");
         }
 
