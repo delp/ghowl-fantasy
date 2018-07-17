@@ -27,6 +27,8 @@ Deliverables
         DONE   TRANSPARENCY WORKS AS IS
 
         F004 - Ghowl moves around when keys pressed
+        DONE
+
         F005 - Room randomly generated
         F006 - Tile collision physics        
         F007 - Ghowl jump
