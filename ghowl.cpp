@@ -371,6 +371,28 @@ int main(int argc, char* args[]) {
                             quit = true;
                             break;
 
+
+
+                            case SDLK_w:
+                            //
+                            wraithEntity.dy -= DELTA_V;
+                            break;
+                            
+                            case SDLK_s:
+                            //
+                            wraithEntity.dy += DELTA_V;
+                            break;
+                            
+                            case SDLK_a:
+                            //
+                            wraithEntity.dx -= DELTA_V;
+                            break;
+                            
+                            case SDLK_d:
+                            //
+                            wraithEntity.dx += DELTA_V;
+                            break;
+
                             case SDLK_UP:
                             ghowlEntity.dy -= DELTA_V;
                             break;
@@ -391,6 +413,26 @@ int main(int argc, char* args[]) {
                     } else if (e.type == SDL_KEYUP && e.key.repeat == 0) {
                         switch( e.key.keysym.sym) {
 
+                            case SDLK_w:
+                            //
+                            wraithEntity.dy += DELTA_V;
+                            break;
+                            
+                            case SDLK_s:
+                            //
+                            wraithEntity.dy -= DELTA_V;
+                            break;
+                            
+                            case SDLK_a:
+                            //
+                            wraithEntity.dx += DELTA_V;
+                            break;
+                            
+                            case SDLK_d:
+                            //
+                            wraithEntity.dx -= DELTA_V;
+                            break;
+                            
                             case SDLK_UP:
                             //
                             ghowlEntity.dy += DELTA_V;
@@ -464,6 +506,8 @@ int main(int argc, char* args[]) {
 
 
                 updateEntity(&ghowlEntity);
+                updateEntity(&wraithEntity);
+
                 renderEntity(&ghowlEntity);
                 renderEntity(&wraithEntity);
 
