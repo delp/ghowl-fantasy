@@ -51,6 +51,7 @@ const int NUM_WRAITH_SPRITES = 5;
 const int NUM_GREENERY_SPRITES = 6;
 const int GREENERY_SPRITE = 16;
 
+const float DELTA_V = 0.04;
 
 const int LEVEL_WIDTH = 16;
 const int LEVEL_HEIGHT = 15;
@@ -371,19 +372,19 @@ int main(int argc, char* args[]) {
                             break;
 
                             case SDLK_UP:
-                            //
+                            ghowlEntity.dy -= DELTA_V;
                             break;
                             
                             case SDLK_DOWN:
-                            //
+                            ghowlEntity.dy += DELTA_V;
                             break;
 
                             case SDLK_LEFT:
-                            //
+                            ghowlEntity.dx -= DELTA_V;
                             break;
 
                             case SDLK_RIGHT:
-                            //
+                            ghowlEntity.dx += DELTA_V;
                             break;
 
                         }
@@ -392,18 +393,20 @@ int main(int argc, char* args[]) {
 
                             case SDLK_UP:
                             //
+                            ghowlEntity.dy += DELTA_V;
                             break;
                             
                             case SDLK_DOWN:
                             //
+                            ghowlEntity.dy -= DELTA_V;
                             break;
 
                             case SDLK_LEFT:
-                            //
+                            ghowlEntity.dx += DELTA_V;
                             break;
 
                             case SDLK_RIGHT:
-                            //
+                            ghowlEntity.dx -= DELTA_V;
                             break;
 
                         }
@@ -460,7 +463,7 @@ int main(int argc, char* args[]) {
                 render(&greenerySheet, 224, 96, &greenClip3);
 
 
-
+                updateEntity(&ghowlEntity);
                 renderEntity(&ghowlEntity);
                 renderEntity(&wraithEntity);
 
@@ -474,6 +477,7 @@ int main(int argc, char* args[]) {
                 //Update screen
                 SDL_RenderPresent( gRenderer );
                 countedFrames++;
+                //printf("x vel: %f\n", ghowlEntity.dx);
                 /*
                 printf("counted frames: %d\n", countedFrames);
                 printf("time_ms: %d\n", time_ms);
