@@ -14,8 +14,10 @@ struct spriteSheet {
 
 struct entity {
     spriteSheet* sheet;
-    int x;
-    int y;
+    float x;
+    float y;
+    float dx;
+    float dy;
     int animFrame;
 };
 
@@ -123,8 +125,8 @@ spriteSheet ghowlSheet = { NULL, 0, 0, NUM_GHOWL_SPRITES, &ghowlFrames[0] } ; //
 spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;  //....or is it?
 spriteSheet greenerySheet = {NULL, 0, 0, NUM_GREENERY_SPRITES, &greeneryFrames[0] }; 
 
-entity ghowlEntity = {&ghowlSheet, 50, 64, 0} ;
-entity wraithEntity = {&wraithSheet, 85, 62, 0} ;
+entity ghowlEntity = {&ghowlSheet, 50, 64, 0.0, 0.0, 0} ;
+entity wraithEntity = {&wraithSheet, 85, 62, 0.0, 0.0, 0} ;
 
 //=====FUNCTION DEFS=====
 
@@ -164,13 +166,18 @@ void updateFrames(entity* ent) {
     }
 }
 
+void updateEntity(entity* ent) {
+    ent->x += ent->dx;
+    ent->y += ent->dy;
+}
+
 void renderEntity(entity* ent) {
     //TODO add a null check
     //TODO this is also hella dumb
     SDL_Rect* clip = &ent->sheet->frames[ent->animFrame];
  
     // TODO why is the quad this?
-    SDL_Rect renderQuad = { ent->x, ent->y, ent->sheet->width, ent->sheet->height };
+    SDL_Rect renderQuad = { (int) ent->x, (int) ent->y, ent->sheet->width, ent->sheet->height };
   
     if( clip != NULL ) {
         renderQuad.w = clip->w;
@@ -357,23 +364,42 @@ int main(int argc, char* args[]) {
                 while (SDL_PollEvent( &e ) != 0) {
                     if (e.type == SDL_QUIT) {
                         quit = true;
-                    } else if( e.type == SDL_KEYDOWN ) {
+                    } else if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ) {
                         switch( e.key.keysym.sym) {
                             case SDLK_ESCAPE:
                             quit = true;
                             break;
 
                             case SDLK_UP:
-                            updateFrames(&ghowlEntity);
+                            //
                             break;
                             
                             case SDLK_DOWN:
-                            updateFrames(&wraithEntity);
-                            updateFrames(&ghowlEntity);
+                            //
                             break;
 
                             case SDLK_LEFT:
-                            updateFrames(&wraithEntity);
+                            //
+                            break;
+
+                            case SDLK_RIGHT:
+                            //
+                            break;
+
+                        }
+                    } else if (e.type == SDL_KEYUP && e.key.repeat == 0) {
+                        switch( e.key.keysym.sym) {
+
+                            case SDLK_UP:
+                            //
+                            break;
+                            
+                            case SDLK_DOWN:
+                            //
+                            break;
+
+                            case SDLK_LEFT:
+                            //
                             break;
 
                             case SDLK_RIGHT:
@@ -415,7 +441,7 @@ int main(int argc, char* args[]) {
                 render(&greenerySheet, 192, 48, &greenClip);
 
 
-
+                //TODO time for code reuse
                 SDL_Rect greenClip2;
                 greenClip2.x = GREENERY_SPRITE * 4;
                 greenClip2.y = 0;
