@@ -448,10 +448,12 @@ int main(int argc, char* args[]) {
                 //Update screen
                 SDL_RenderPresent( gRenderer );
                 countedFrames++;
+                /*
                 printf("counted frames: %d\n", countedFrames);
                 printf("time_ms: %d\n", time_ms);
                 printf("time_sec: %f\n", time_ms / 1000.f);
                 printf("FPS: %f\n", avgFPS);
+                */
             }
         }
     }
