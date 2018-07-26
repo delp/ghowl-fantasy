@@ -171,6 +171,8 @@ void updateFrames(entity* ent) {
 }
 
 void updateEntity(entity* ent) {
+    //TODO if you cast the ent->dx to (int) here, the diagnoal jitter disappears
+    //you need to figure out why that is
     ent->x += ent->dx;
     ent->y += ent->dy;
 }
