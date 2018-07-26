@@ -51,7 +51,10 @@ const int NUM_WRAITH_SPRITES = 5;
 const int NUM_GREENERY_SPRITES = 6;
 const int GREENERY_SPRITE = 16;
 
-const float DELTA_V = 0.04;
+const float DELTA_V = 1.40;
+
+const int SCREEN_FPS = 60;
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 const int LEVEL_WIDTH = 16;
 const int LEVEL_HEIGHT = 15;
@@ -361,6 +364,9 @@ int main(int argc, char* args[]) {
             
             while(!quit) {
 
+                //Need to know the start time to calculate frame length
+                int frame_start = SDL_GetTicks();
+
                 //handle all Q'd events 
                 while (SDL_PollEvent( &e ) != 0) {
                     if (e.type == SDL_QUIT) {
@@ -517,17 +523,23 @@ int main(int argc, char* args[]) {
                     avgFPS = 0;  
                 }
 
-
                 //Update screen
                 SDL_RenderPresent( gRenderer );
+
+                //TODO this seems to work but diagonally movement seems to be choppy?
+                int frame_end = SDL_GetTicks();
+                int frame_length = frame_end - frame_start;
+                //printf("frame start: %d\n", frame_start);
+                //printf("frame end: %d\n", frame_end);
+                //printf("frame len: %d\n", frame_length);
+                //printf("stpf - frame len: %d\n", SCREEN_TICKS_PER_FRAME - frame_length);
+                if( frame_length < SCREEN_TICKS_PER_FRAME ) {
+                    SDL_Delay(SCREEN_TICKS_PER_FRAME - frame_length);
+                }
+                //printf("frame ticks: %d\n", SDL_GetTicks());
+
                 countedFrames++;
-                //printf("x vel: %f\n", ghowlEntity.dx);
-                /*
-                printf("counted frames: %d\n", countedFrames);
-                printf("time_ms: %d\n", time_ms);
-                printf("time_sec: %f\n", time_ms / 1000.f);
-                printf("FPS: %f\n", avgFPS);
-                */
+                
             }
         }
     }
