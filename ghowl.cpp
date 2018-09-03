@@ -130,7 +130,7 @@ spriteSheet wraithSheet = { NULL, 0, 0, NUM_WRAITH_SPRITES, &wraithFrames[0] } ;
 spriteSheet greenerySheet = {NULL, 0, 0, NUM_GREENERY_SPRITES, &greeneryFrames[0] }; 
 
 entity ghowlEntity = {&ghowlSheet, 50, 64, 0.0, 0.0, 0} ;
-entity wraithEntity = {&wraithSheet, 85, 62, 0.0, 0.0, 0} ;
+entity wraithEntity = {&wraithSheet, 50, 42, 0.0, 0.0, 0} ;
 
 //=====FUNCTION DEFS=====
 
@@ -141,6 +141,62 @@ void render(spriteSheet* s, int x, int y, SDL_Rect* clip);
 void renderEntity(entity* ent);
 int getRand(int max);
 void initRand();
+void collisionDetection();
+void getTileAt(int x, int y);
+
+bool checkCollision(entity* ent) {
+    bool result = false;
+
+    //get the position of the entity
+    int x = ent->x;
+    int y = ent->y;
+    //get its size
+    //TODO fix this, add a width and height to entity
+    int width = GHOWL_SPRITE_WIDTH;
+    int height = GHOWL_SPRITE_WIDTH;
+
+    //get tile size
+    int tileSize = TILE_SPRITE_WIDTH;
+
+
+
+    //TODO move this intot he nentity
+    //top
+    int top = ent->y;
+    //bottom
+    int bottom = ent->y + GHOWL_SPRITE_WIDTH;
+    //left
+    int left = ent->x;
+    //right
+    int right = ent->x + GHOWL_SPRITE_WIDTH;
+    
+    int leftTile = left / tileSize;
+    int rightTile = right / tileSize;
+    int topTile = top / tileSize;
+    int bottomTile = bottom / tileSize;
+
+
+    if(leftTile < 0) 
+        leftTile = 0;
+    if(rightTile > tileSize) 
+        rightTile = tileSize;
+    if(topTile < 0) 
+        topTile = 0;
+    if(bottomTile > tileSize)
+        bottomTile = tileSize;
+
+    for(int i = leftTile; i<=rightTile; i++) {
+        for(int j = topTile; j<=bottomTile; j++) {
+            int tileVal = tileMap[j][i];
+            if(tileVal > -1) {
+                printf("collision at %d, %d\n", j, i);
+                result = true;
+            }
+        }
+    }
+
+    return result;
+}
 
 void initRand() {
     srand(time(NULL));
@@ -171,10 +227,24 @@ void updateFrames(entity* ent) {
 }
 
 void updateEntity(entity* ent) {
+
+
     //TODO if you cast the ent->dx to (int) here, the diagnoal jitter disappears
     //you need to figure out why that is
+
+
+    float oldX = ent->x;
     ent->x += ent->dx;
+    if(checkCollision(ent)) {
+        ent->x = oldX;
+    }
+
+    float oldY = ent->y;
     ent->y += ent->dy;
+    if(checkCollision(ent)) {
+        ent->y = oldY;
+    }
+
 }
 
 void renderEntity(entity* ent) {
@@ -513,9 +583,14 @@ int main(int argc, char* args[]) {
                 render(&greenerySheet, 224, 96, &greenClip3);
 
 
+                //UPDATE DUDES
                 updateEntity(&ghowlEntity);
                 updateEntity(&wraithEntity);
 
+                //CHECK COLLISION and handle
+                checkCollision(&ghowlEntity);
+
+                //DRAW DUDES
                 renderEntity(&ghowlEntity);
                 renderEntity(&wraithEntity);
 
